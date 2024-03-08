@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/randle/static/css/main.3175161a.css",
+    "main.js": "/randle/static/js/main.d728d797.js",
+    "static/js/787.b3f9d252.chunk.js": "/randle/static/js/787.b3f9d252.chunk.js",
+    "index.html": "/randle/index.html",
+    "main.3175161a.css.map": "/randle/static/css/main.3175161a.css.map",
+    "main.d728d797.js.map": "/randle/static/js/main.d728d797.js.map",
+    "787.b3f9d252.chunk.js.map": "/randle/static/js/787.b3f9d252.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3175161a.css",
+    "static/js/main.d728d797.js"
+  ]
+}
