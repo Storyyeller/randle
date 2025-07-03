@@ -2,6 +2,108 @@ import { WORDS } from '../constants/wordlist'
 import { VALIDGUESSES } from '../constants/validGuesses'
 
 const WORDSET = new Set([...WORDS, ...VALIDGUESSES]);
+// Hardcode the previously chosen 99 words to avoid repeats after the code is reset.
+const PREVIOUSLY_CHOSEN = new Set([
+  "ruler",
+  "fraud",
+  "rehab",
+  "query",
+  "blunt",
+  "leech",
+  "stiff",
+  "earth",
+  "incur",
+  "novel",
+  "arrow",
+  "gorge",
+  "prize",
+  "squat",
+  "belie",
+  "prism",
+  "found",
+  "mimic",
+  "rebar",
+  "close",
+  "plank",
+  "guile",
+  "curvy",
+  "slash",
+  "rainy",
+  "grant",
+  "gamma",
+  "neigh",
+  "forum",
+  "plant",
+  "lyric",
+  "ahead",
+  "jazzy",
+  "sniff",
+  "evict",
+  "skate",
+  "cliff",
+  "crank",
+  "fecal",
+  "knack",
+  "gaudy",
+  "peril",
+  "clack",
+  "pinky",
+  "miner",
+  "meter",
+  "grasp",
+  "shall",
+  "brawl",
+  "smith",
+  "mushy",
+  "hover",
+  "patio",
+  "spoof",
+  "extol",
+  "bowel",
+  "louse",
+  "fifth",
+  "decay",
+  "blend",
+  "amass",
+  "snore",
+  "sound",
+  "opera",
+  "boxer",
+  "allow",
+  "jelly",
+  "email",
+  "apron",
+  "snaky",
+  "modal",
+  "ghost",
+  "fairy",
+  "scoop",
+  "creep",
+  "grail",
+  "bilge",
+  "devil",
+  "naive",
+  "jaunt",
+  "fussy",
+  "sever",
+  "merit",
+  "plump",
+  "frost",
+  "reedy",
+  "exert",
+  "clean",
+  "nanny",
+  "crate",
+  "begun",
+  "penne",
+  "prank",
+  "optic",
+  "forth",
+  "pasty",
+  "maker",
+  "crept",
+  "coast",
+]);
 
 export const isWordInWordList = (word: string) => {
   return WORDSET.has(word.toLowerCase())
@@ -26,7 +128,7 @@ const scorePair = (solution: string, firstGuess: string) => {
 }
 
 export const getWordOfDay = () => {
-  const epochMs = new Date('March 6, 2024 00:00:00').valueOf()
+  const epochMs = new Date('July 2, 2025 00:00:00').valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay - 1 / 24)
@@ -45,12 +147,18 @@ export const getWordOfDay = () => {
   // Ensure that the same word is not chosen twice by choosing the
   // words for every previous day without replacement
   let chosen = [];
-  let unchosen = [...WORDS]
+  let unchosen = [...WORDS].filter(word => !PREVIOUSLY_CHOSEN.has(word));
   while (chosen.length <= index) {
     let i = next() % unchosen.length
-    unchosen[unchosen.length-1] = unchosen[i]
-    chosen.push(unchosen.pop())
+    
+    // Swap the chosen word with the last unchosen word so it can be removed
+    const word = unchosen[i]
+    unchosen[i] = unchosen[unchosen.length-1]
+    unchosen.pop()
+
+    chosen.push(word)
   }
+
   const solution = (chosen[index] || '').toUpperCase()
   if (state !== index) {state ^= index;}
 
